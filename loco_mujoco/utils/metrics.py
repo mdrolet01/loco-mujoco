@@ -5,7 +5,6 @@ import jax.numpy as jnp
 from flax import struct
 from jax.scipy.spatial.transform import Rotation as R
 
-from metrx import DistanceMeasures
 import mujoco
 from loco_mujoco.core.wrappers import SummaryMetrics
 from loco_mujoco.core.utils.math import calc_site_velocities, calculate_relative_site_quatities, quat_scalarfirst2scalarlast
@@ -96,6 +95,8 @@ class MetricsHandler:
         self._body_rootid = jnp.array(model.body_rootid) # get the root body id for all bodies
 
         if self.measures is not None:
+            from metrx import DistanceMeasures
+
             assert self._traj_data is not None, "Trajectory data is required for calculating measures."
             for m in self.measures:
                 assert m in SUPPORTED_MEASURES, f"{m} is not a supported measure."
